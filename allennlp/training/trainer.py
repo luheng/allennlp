@@ -181,7 +181,10 @@ class Trainer:
                 if self._grad_norm:
                     clip_grad_norm(self._model.parameters(), self._grad_norm)
                 self._optimizer.step()
-                metrics = self._model.get_metrics()
+
+                # Too slow.
+                # metrics = self._model.get_metrics()
+                metrics = {}
                 metrics["loss"] = float(train_loss / batch_num)
                 description = self._description_from_metrics(metrics)
                 train_generator_tqdm.set_description(description)
