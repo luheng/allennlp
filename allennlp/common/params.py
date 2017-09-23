@@ -124,6 +124,7 @@ class Params(MutableMapping):
             default settings for encoders if you want).
         """
         default = choices[0] if default_to_first_choice else self.DEFAULT
+        print (self.params)
         value = self.pop(key, default)
         if value not in choices:
             key_str = self.history + key
