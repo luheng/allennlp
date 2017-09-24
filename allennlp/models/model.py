@@ -106,7 +106,8 @@ class Model(torch.nn.Module, Registrable):
         outputs = self.decode(self.forward(**model_input))
 
         for name, output in list(outputs.items()):
-            output = output[0]
+            if len(output) == 1 and type(output[0]) == list:
+              output = output[0]
             if isinstance(output, torch.autograd.Variable):
                 output = output.data.cpu().numpy()
             outputs[name] = output

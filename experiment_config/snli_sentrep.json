@@ -14,40 +14,25 @@
   "train_data_path": "/home/luheng/Workspace/flexsrl/data/snli_1.0/snli_1.0_train.jsonl",
   "validation_data_path": "/home/luheng/Workspace/flexsrl/data/snli_1.0/snli_1.0_dev.jsonl",
   "model": {
-    "type": "decomposable_attention",
+    "type": "sent_rep",
     "text_field_embedder": {
       "tokens": {
         "type": "embedding",
-        "projection_dim": 200,
+        "projection_dim": 300,
         "pretrained_file": "/home/luheng/Workspace/flexsrl/data/glove.42B.300d.txt.gz",
         "embedding_dim": 300,
         "trainable": false
       }
     },
-    "premise_encoder": {
+    "sentence_encoder": {
       "type": "intra_sentence_attention",
-      "input_dim": 200,
-      "projection_dim": 200 
-    },
-    "attend_feedforward": {
-      "input_dim": 400,
-      "num_layers": 2,
-      "hidden_dims": 200,
-      "activations": "relu",
-      "dropout": 0.2
-    },
-    "similarity_function": {"type": "dot_product"},
-    "compare_feedforward": {
-      "input_dim": 800,
-      "num_layers": 2,
-      "hidden_dims": 200,
-      "activations": "relu",
-      "dropout": 0.2
+      "input_dim": 300,
+      "projection_dim": 300
     },
     "aggregate_feedforward": {
-      "input_dim": 400,
+      "input_dim": 2400,
       "num_layers": 2,
-      "hidden_dims": [200, 3],
+      "hidden_dims": [600, 3],
       "activations": ["relu", "linear"],
       "dropout": [0.2, 0.0]
     },
@@ -63,14 +48,13 @@
   },
 
   "trainer": {
-    "num_epochs": 500,
-    "patience": 500,
-    "cuda_device": 2,
+    "num_epochs": 100,
+    "patience": 100,
+    "cuda_device": 1,
     "validation_metric": "+accuracy",
     "no_tqdm": true,
     "optimizer": {
-      "type": "adagrad",
-      "lr": 0.01
+      "type": "adagrad"
     }
   }
 }
